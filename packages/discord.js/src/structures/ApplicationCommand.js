@@ -422,9 +422,13 @@ class ApplicationCommand extends Base {
       !isEqual(
         command.integrationTypes ??
           command.integration_types ??
-          this.client.application.integrationTypesConfig?.keys() ?? [ApplicationIntegrationType.GuildInstall],
+          (this.client.application.integrationTypesConfig
+            ? Object.keys(this.client.application.integrationTypesConfig)
+            : [ApplicationIntegrationType.GuildInstall]),
         this.integrationTypes ??
-          this.client.application.integrationTypesConfig?.keys() ?? [ApplicationIntegrationType.GuildInstall],
+          (this.client.application.integrationTypesConfig
+            ? Object.keys(this.client.application.integrationTypesConfig)
+            : [ApplicationIntegrationType.GuildInstall]),
       ) ||
       !isEqual(command.contexts ?? [], this.contexts ?? [])
     ) {

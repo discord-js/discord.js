@@ -1,0 +1,12 @@
+diff --git a/types/websocket.d.ts b/types/websocket.d.ts
+index 563866479f1fbbf4977280f28b60ffa39b3febde..f8241d4c6d6ececebc08a4a0f832af876eb8fa62 100644
+--- a/types/websocket.d.ts
++++ b/types/websocket.d.ts
+@@ -10,6 +10,7 @@ import {
+ } from './patch'
+ import Dispatcher from './dispatcher'
+ import { HeadersInit } from './fetch'
++import type { ReadableStream, WritableStream } from 'stream/web';
+ 
+ export type BinaryType = 'blob' | 'arraybuffer'
+ 

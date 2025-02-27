@@ -1,6 +1,7 @@
 'use strict';
 
 const { lazy } = require('@discordjs/util');
+const { ComponentType } = require('discord-api-types/v10');
 const BaseInteraction = require('./BaseInteraction');
 const InteractionWebhook = require('./InteractionWebhook');
 const InteractionResponses = require('./interfaces/InteractionResponses');
@@ -79,12 +80,21 @@ class MessageComponentInteraction extends BaseInteraction {
 
   /**
    * The component which was interacted with
-   * @type {MessageActionRowComponent|APIMessageActionRowComponent}
+   * @type {MessageActionRowComponent|APIComponentInActionRow}
    * @readonly
    */
   get component() {
     return this.message.components
-      .flatMap(row => row.components)
+      .flatMap(component => {
+        switch (component.type) {
+          case ComponentType.ActionRow:
+            return component.components;
+          case ComponentType.Section:
+            return [component.accessory];
+          default:
+            return [component];
+        }
+      })
       .find(component => (component.customId ?? component.custom_id) === this.customId);
   }
 
